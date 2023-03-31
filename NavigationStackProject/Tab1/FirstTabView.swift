@@ -8,17 +8,39 @@
 import SwiftUI
 
 struct FirstTabView: View {
+    @State var showSettings = false
     var body: some View {
         NavigationStack{
-            VStack{
+            List{
                 Text("Root view 1")
                 NavigationLink("Idz w pizdu 1", value: "pizdu1")
-                    .navigationDestination(for: String.self){ textvalue in
-                        Text("detail with value:\(textvalue)")
-                    }
-                NavigationLink("Stary wariant pizdu"){
-                    Text("Old w pizdu")
+
+                NavigationLink("Goto view terefere", value: "terefere")
+                NavigationLink("Goto view 1", value: 1)
+
+                
+                Button{
+                    showSettings.toggle()
+                    
+                } label: {
+                    Text("Settings")
                 }
+                
+                Section("Old" ){
+                    
+                    NavigationLink("Stary wariant pizdu"){
+                        Text("Old w pizdu")
+                    }
+                }
+            }
+            .navigationDestination(for: String.self){ textValue in
+                Text("detail with value:\(textValue)")
+            }
+            .navigationDestination(for: Int.self){ intValue in
+                Text("detail with value:\(intValue)")
+            }
+            .navigationDestination(isPresented: $showSettings) {
+                Text("Some settings")
             }
         }
     }
