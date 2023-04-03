@@ -9,10 +9,12 @@ import SwiftUI
 
 struct FirstTabView: View {
     @State var showSettings = false
+    @State private var path = NavigationPath()
+        /// <#Description#>
     var body: some View {
-        NavigationStack{
+        NavigationStack(path: $path){
             List{
-                Text("Root view 1")
+             
                 NavigationLink("Idz w pizdu 1", value: "pizdu1")
 
                 NavigationLink("Goto view terefere", value: "terefere")
@@ -28,19 +30,39 @@ struct FirstTabView: View {
                 
                 Section("Old" ){
                     
-                    NavigationLink("Stary wariant pizdu"){
-                        Text("Old w pizdu")
+                    NavigationLink("Books"){
+                        BooksListView()
+                    }
+                    NavigationLink("Third"){
+                        ThirdTabView()
                     }
                 }
             }
             .navigationDestination(for: String.self){ textValue in
-                Text("detail with value:\(textValue)")
+                FirstDetailView(text: textValue,path: $path)
             }
             .navigationDestination(for: Int.self){ intValue in
                 Text("detail with value:\(intValue)")
             }
             .navigationDestination(isPresented: $showSettings) {
-                Text("Some settings")
+                CountryListView()
+            }
+            .navigationTitle("Root view")
+        }
+        VStack{
+            Text("path")
+            Text("number of detail views in stack\(path.count)")
+            Button{
+                if path.isEmpty == false{
+                    path.removeLast()
+                }
+            } label: {
+                Text("back")
+            }
+            Button{
+                path.append("Dupa zbita" )
+            } label: {
+                Text("back")
             }
         }
     }
