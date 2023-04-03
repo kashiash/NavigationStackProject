@@ -49,22 +49,7 @@ struct FirstTabView: View {
             }
             .navigationTitle("Root view")
         }
-        VStack{
-            Text("path")
-            Text("number of detail views in stack\(path.count)")
-            Button{
-                if path.isEmpty == false{
-                    path.removeLast()
-                }
-            } label: {
-                Text("back")
-            }
-            Button{
-                path.append("Dupa zbita" )
-            } label: {
-                Text("back")
-            }
-        }
+
     }
 }
 
